@@ -9,7 +9,7 @@ Posterior a clonar el repositorio e instalar dependencias
 
 >npm install
 
-será necesario agregar la carpeta de imágenes dentro de /public
+será necesario agregar la carpeta de imágenes (que va adjunta en el correo) dentro de /public
 ## Correr el proyecto
 
 Para correr el proyecto, es necesario desde command prompt, acceder a la carpeta del proyecto y correr el siguiente comando 
