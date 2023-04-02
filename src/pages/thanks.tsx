@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import Footer from '@/components/layout/Footer'
 
 const ThanksPage = () => (
@@ -5,7 +7,9 @@ const ThanksPage = () => (
 
         <main className="bg-[url('/atomic/bg-svg.svg')] bg-cover bg-no-repeat h-[90%] py-10 px-16 flex justify-evenly items-stretch">
             <header>
-                <img src="/atomic/LogoAtomic.webp" alt="atomic-logo" />
+                <Link href="/">
+                    <img src="/atomic/LogoAtomic.webp" className="w-full h-auto" alt="atomic-logo" />
+                </Link>
             </header>
             <section className="flex flex-col justify-center w-2/4 gap-10">
                 <header className="flex flex-col py-5">
@@ -30,7 +34,7 @@ const ThanksPage = () => (
             </section>
             <aside className="w-2/4 flex justify-center">
                 <img 
-                    className="w-3/4 h-auto"
+                    className="w-3/4 h-auto animate-float-element"
                     src="/atomic/a-4.png" alt="atomic astronaun image" 
                 />
             </aside>
