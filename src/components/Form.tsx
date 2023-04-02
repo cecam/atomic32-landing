@@ -4,24 +4,35 @@ interface IProps {
     formState: {
         state: any,
         onFormChange: (event: any) => void,
-        isFieldValid: (fieldName: string, value: string) => RegExpMatchArray | null | undefined,
+        isFieldValid: (fieldName: string, value: string) => string | undefined | null,
     },
     config: {
         title: string,
         titleSpan: string,
         description: string,
+        descriptionModal: JSX.Element,
+        variableonDescription: string,
         step: number,
-        fields: {
-            name: string,
-            type: string,
-            placeholder: string,
-            label: string
-        }[]
+        loadingScreen?: boolean,
+        backLink?: {
+            LabelText: string,
+            linkText: string,
+            step: number,
+        },
+        fields: IInput[]
     },
-    changeStep: Dispatch<SetStateAction<number>>
+    changeStep: Dispatch<SetStateAction<number>>,
+    setShowSplash: Dispatch<SetStateAction<boolean>>
 }
 
-const Form = ({formState, config, changeStep}:IProps) => {
+interface IInput {
+    name: string,
+    type: string,
+    placeholder: string,
+    label: string
+}
+
+const Form = ({formState, config, changeStep, setShowSplash}:IProps) => {
     const { state={}, onFormChange, isFieldValid } = formState;
     const {
         title,
@@ -30,6 +41,50 @@ const Form = ({formState, config, changeStep}:IProps) => {
         step,
         fields
     } = config;
+
+    const onSubmit = (showSplash?:boolean, directionPage?:number) => {
+        if(config.loadingScreen || showSplash) {
+            setShowSplash(true)
+        }
+        changeStep((curr:number) =>  directionPage ? directionPage : curr +1 )
+        
+    }
+
+    const renderInput = (input:IInput) => {
+        switch(input.type) {
+            case 'text':
+                return (
+                    <div key={input.name} className="py-5 flex flex-col w-1/2">
+                        <label className="text-white text-lg tracking-wider mb-1" htmlFor={input.name}>{input.label}</label>
+                        <input 
+                            {...input} 
+                            value={state[input.name]}
+                            onChange={onFormChange}
+                            className={`py-2 px-5 rounded-sm text-base focus:outline-0 
+                                ${isFieldValid(input.name, state[input.name]) && state[input.name] && 'border-solid border-2 border-red-500 focus:border-4'}`}
+                        />
+                        {
+                            state[input.name]
+                            && <p className="text-red-500">{isFieldValid(input.name, state[input.name])}</p>                        
+                        }
+                    </div>
+                )
+            case 'checkbox':
+                return(
+                    <div key={input.name} className="py-5 flex items-center w-1/2">
+                        <input 
+                            {...input} 
+                            value={state[input.name]}
+                            onChange={onFormChange}
+                            className={`w-6 h-6 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'}`}
+                        />
+                        <label htmlFor={input.name} className="text-white text-lg tracking-wider ml-2">{input.label}</label>
+                    </div>
+                )
+            default:
+                return null
+        }
+    }
 
     return (
         <>
@@ -44,30 +99,31 @@ const Form = ({formState, config, changeStep}:IProps) => {
                     </h1>
                 </div>
 
-                <p className="text-2xl text-white font-light tracking-wider my-5">{description}</p>
+                <p className="text-2xl text-white font-light tracking-wider my-5">
+                    {description} {config.variableonDescription && state[config.variableonDescription]}
+                </p>
+
+                {config.descriptionModal && config.descriptionModal}
             </header>
             
             {fields.map((field) => (
-                <div key={field.name} className="py-5 flex flex-col w-1/2">
-                    <label className="text-white text-lg tracking-wider mb-1" htmlFor={field.name}>{field.label}</label>
-                    <input 
-                        {...field} 
-                        value={state[field.name]}
-                        onChange={onFormChange}
-                        className={`py-2 px-5 rounded-sm text-base focus:outline-0 
-                            ${!isFieldValid(field.name, state[field.name]) && state[field.name] && 'border-solid border-2 border-red-500 focus:border-4'}`}
-                    />
-                    {
-                        !isFieldValid(field.name, state[field.name]) && state[field.name]
-                        && <p className="text-red-500">{field.label} inválido</p>
-                        
-                    }
-                </div>
+                renderInput(field)
             ))}
+
+            {config.backLink?.step &&
+                <div>
+                    <p className="text-lg text-white">{config.backLink.LabelText} 
+                        <span
+                            onClick={() => onSubmit(true, config.backLink?.step)}
+                            className="ml-3 font-bold cursor-pointer underline"
+                        >{config.backLink.linkText}</span>
+                    </p>
+                </div>
+            }
 
             <div className="grid place-items-end w-full mt-[10%]">
                 <button 
-                    onClick={() => changeStep((curr:number) =>  curr +1 )}
+                    onClick={() => onSubmit()}
                     className="rounded-full py-3 px-16 bg-orange-600 text-white"
                 >
                     Enviar
