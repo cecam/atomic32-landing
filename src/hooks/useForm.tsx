@@ -2,18 +2,22 @@ import { useState } from 'react'
 
 const useForm = (initialState = {}) => {
     const [ state, setState ] = useState(initialState);
-    const [ errors, setErrors] = useState(() => {
-        return Object.keys(state)
-    })
 
     const isFieldValid = (fieldName:string, value:string) => {
+        let stringRegex = /^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\']+[\s])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$/g 
+        let phoneRegex = /^[0-9]{10}$/
+
         switch(fieldName) {
-            case 'name':
+            case 'name':                
+                return  !value.match(stringRegex) && 'El nombre deberá tener mínimo 5 caracteres'
             case 'lastName':
-               let stringRegex = /^([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\']+[\s])+([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])+[\s]?([A-Za-zÁÉÍÓÚñáéíóúÑ]{0}?[A-Za-zÁÉÍÓÚñáéíóúÑ\'])?$/g 
-               console.log(value.match(stringRegex));
-               
-               return value.match(stringRegex)
+                return !value.match(stringRegex) && 'Los apellidos deberán tener mínimo 5 caracteres'
+            case 'phone':
+                return value.match(phoneRegex) ? '' : 'Teléfono con formato incorrecto'
+            case 'verification':
+                return value.split('').length === 6 ? '' : 'El código debe contener 6 caracteres'
+            default:
+                return ''
         }
     }
 
