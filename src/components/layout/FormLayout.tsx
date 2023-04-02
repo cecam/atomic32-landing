@@ -71,7 +71,7 @@ const FormLayout = ({children, stepState, config}:any) => {
                     </section>
                     <aside className="w-1/3">
                         <img 
-                            className="w-full animate-float-element transition-all"
+                            className="w-full animate-float-element"
                             src={config.image} alt="atomic astronaun image" 
                         />
                     </aside>

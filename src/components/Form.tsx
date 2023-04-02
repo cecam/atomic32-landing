@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import {useRouter} from 'next/navigation'
 
 interface IProps {
     formState: {
@@ -34,6 +35,7 @@ interface IInput {
 
 const Form = ({formState, config, changeStep, setShowSplash}:IProps) => {
     const { state={}, onFormChange, isFieldValid } = formState;
+    const router = useRouter();
     const {
         title,
         titleSpan,
@@ -43,6 +45,7 @@ const Form = ({formState, config, changeStep, setShowSplash}:IProps) => {
     } = config;
 
     const onSubmit = (showSplash?:boolean, directionPage?:number) => {
+        if(config.step === 4) router.replace('/thanks')
         if(config.loadingScreen || showSplash) {
             setShowSplash(true)
         }
