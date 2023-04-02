@@ -1,38 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Landing page Atomic
 
-First, run the development server:
+Prueba técnica para frontend engineer en Atomic32
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Instalation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Posterior a clonar el repositorio e instalar dependencias 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+>npm install
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+será necesario agregar la carpeta de imágenes dentro de /public
+## Correr el proyecto
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Para correr el proyecto, es necesario desde command prompt, acceder a la carpeta del proyecto y correr el siguiente comando 
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> npm run dev
 
-## Learn More
+Posteriormente, desde el navegador deberá acceder a la ruta y comenzar a testearlo
 
-To learn more about Next.js, take a look at the following resources:
+> http://localhost:3000/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notas del proyecto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Debido a que se dieron 72 horas para terminar el proyecto, tuve que dcidir entre terminar el proyecto completo o hacer componentes reusables para mostrar conocimientos y habilidades; partiendo de elegir la segunda opción, me enfoqué en hacer lo mejor posible la sección del formulario.
 
-## Deploy on Vercel
+Para esto, se creó un componente "Form.tsx" el cual recibe una configuración y a partir de ahí genera en automático cada sección del formulario, de igual forma, el layout (el cual está memoizado para evitar su constante renderización) funciona de manera geneérica
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Puntos a mejorar
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Cuestiones en las que trabajaría de tener más tiempo:
+
+1. Tests de la aplicación
+2. Corregir la validación del botón en el formulario para impedir el avance si los campos están vacíos
+3. Landing page
