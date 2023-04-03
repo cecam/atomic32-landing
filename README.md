@@ -32,4 +32,5 @@ Cuestiones en las que trabajaría de tener más tiempo:
 
 1. Tests de la aplicación
 2. Corregir la validación del botón en el formulario para impedir el avance si los campos están vacíos
-3. Landing page
+3. Responsive
+4. Landing page
